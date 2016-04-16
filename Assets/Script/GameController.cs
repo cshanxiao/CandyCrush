@@ -18,7 +18,7 @@ public class GameController: MonoBehaviour {
 
     public float xOff = 0.45f;  //x轴偏移量
     public float yOff = 0.45f;  //y轴偏移量
-    public float mWait = 0.3f;  //动作时间间隔
+    public float mWait = 0.2f;  //动作时间间隔
 
     public int mCol = 10;  //列数
     public int mRow = 10;  //行数
