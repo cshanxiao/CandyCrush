@@ -10,10 +10,6 @@ public class Candy: MonoBehaviour {
     public int mCol = 0;  //纵序号
     public int mRow = 0;  //横序号
     public float mSpeed = 45f;
-
-    public Material mDarkMaterial;
-    public Material mNormalMaterial;
-
     public GameController._TYPE mType = GameController._TYPE.NORMAL;
 
     public delegate void ExchangeEventHandler(object sender, ExchangeEventArgs e);
@@ -74,10 +70,10 @@ public class Candy: MonoBehaviour {
     public void setDark(bool flag) {
         SpriteRenderer sr = this.gameObject.GetComponent<SpriteRenderer>();
         if(flag) {
-            sr.material = mDarkMaterial;
+            sr.color = Color.yellow;
         }
         else {
-            sr.material = mNormalMaterial;
+            sr.color = Color.white;
         }
     }
 
