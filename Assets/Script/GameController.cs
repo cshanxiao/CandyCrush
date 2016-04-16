@@ -106,14 +106,11 @@ public class GameController: MonoBehaviour {
         InitCandys(SVector);
 
         MatchList = new ArrayList();
-
         DestroyList = new List<Candy>();
 
         while(0 < CheckMatch()) {
             removeMatchCandy();
-
             DestroyCandy();
-
             InitCandys(SVector);
         }
     }
