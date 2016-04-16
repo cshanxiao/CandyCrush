@@ -4,27 +4,27 @@ using System.Linq;
 using System.Collections.Generic;
 
 public class Game: MonoBehaviour {
-
-    //public
     public GameObject candy1;
     public GameObject candy2;
     public GameObject candy3;
     public GameObject candy4;
     public GameObject candy5;
-    public float mSep = 0.318f;//物体间隔
-    public Vector3 mBegin_Pos = new Vector3(0f, 0f, 0f);//第一块所在位置
-    public int Col_Count = 0;//列数量
-    public int Row_Count = 0;//行数量
+    public float mSep = 0.318f;  //物体间隔
+    public Vector3 mBegin_Pos = new Vector3(0f, 0f, 0f);  //第一块所在位置
+    public int Col_Count = 0;  //列数量
+    public int Row_Count = 0;  //行数量
 
     //static
-    public static int allUpdated = 0;//帧记录，方便一些有先后顺序的操作能按序进行
+    public static int allUpdated = 0;  //帧记录，方便一些有先后顺序的操作能按序进行
+
     //private
-    private int grade = 0;//获得的分数
+    private int grade = 0;  //获得的分数
     private bool readyToDestroy = true;
     private bool readyToCheck = false;
     private bool readyToAdd = false;
     private bool isMoving = true;
     private List<CandyAction> Container;
+
     void Start() {
         float Re_X = mBegin_Pos.x;
         Container = new List<CandyAction>();
@@ -69,12 +69,14 @@ public class Game: MonoBehaviour {
         }
         allUpdated++;
     }
+
     IEnumerator waitAndCheck() {
         yield return new WaitForSeconds(0.3f);
         checkMatch();
         readyToCheck = false;
         readyToDestroy = true;
     }
+
     IEnumerator waitAndDestroy() {
         yield return new WaitForSeconds(0.2f);
         if(DestroyCandy()) {
@@ -85,16 +87,19 @@ public class Game: MonoBehaviour {
         }
         readyToDestroy = false;
     }
+
     IEnumerator waitAndReorder() {
         yield return new WaitForSeconds(0.1f);
         reOrder();
         readyToAdd = false;
         readyToCheck = true;
     }
+
     IEnumerator waitOnly() {
         yield return new WaitForSeconds(0.3f);
         readyToAdd = true;
     }
+
     bool DestroyCandy() {
         int count = 0;
         List<CandyAction> temp = new List<CandyAction>();
@@ -111,6 +116,7 @@ public class Game: MonoBehaviour {
         }
         return count > 0;
     }
+
     //重新编号
     void reOrder() {
         //重新编号
@@ -141,12 +147,14 @@ public class Game: MonoBehaviour {
             }
         }
     }
+
     void OnGUI() {
         GUILayout.BeginArea(new Rect(500, 100, 140, 140));
         GUILayout.Label("分数：" + this.grade.ToString());
         GUILayout.Label("时间(秒)：" + Time.realtimeSinceStartup.ToString("f2").Replace('.', '：'));
         GUILayout.EndArea();
     }
+
     void checkMatch() {
         var query_destroyed = from CandyAction item in Container where item.isDestroy == true select item;
         var query_reorder = from CandyAction item in Container where item.isReorder == true select item;
@@ -182,6 +190,7 @@ public class Game: MonoBehaviour {
         readyToDestroy = true;
         readyToAdd = false;
     }
+
     CandyAction getCandyObject(int col, int row) {
         var query = from CandyAction ca in Container
                     where ca.mCol == col && ca.mRow == row
@@ -189,6 +198,7 @@ public class Game: MonoBehaviour {
         CandyAction temp_Object = query.Count() > 0 ? query.First() : null;
         return temp_Object;
     }
+
     /// <summary>
     /// 获取随机糖果
     /// </summary>
