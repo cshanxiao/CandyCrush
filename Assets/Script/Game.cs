@@ -158,7 +158,9 @@ public class Game: MonoBehaviour {
     void checkMatch() {
         var query_destroyed = from CandyAction item in Container where item.isDestroy == true select item;
         var query_reorder = from CandyAction item in Container where item.isReorder == true select item;
-        if(query_destroyed.Count() == 0 && Container.Count == this.Row_Count * this.Col_Count && query_reorder.Count() == this.Row_Count * this.Col_Count) {
+        if(query_destroyed.Count() == 0 
+            && Container.Count == this.Row_Count * this.Col_Count 
+            && query_reorder.Count() == this.Row_Count * this.Col_Count) {
             for(int index = 0; index < Container.Count; index++) {
                 //获取左边邻居
                 CandyAction leftObject = getCandyObject(Container[index].mCol - 1, Container[index].mRow);
@@ -186,7 +188,7 @@ public class Game: MonoBehaviour {
                     }
                 }
             }
-        }
+        }   
         readyToDestroy = true;
         readyToAdd = false;
     }

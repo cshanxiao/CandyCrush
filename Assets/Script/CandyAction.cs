@@ -8,7 +8,7 @@ public class CandyAction: MonoBehaviour {
     public bool isReorder = true;
     public Vector3 mPos;
     public bool isDestroy = false;
-    public float mSpeed = 30.5f;
+    public float mSpeed = 45f;
 
     /// <summary>
     /// 索引，用于判断是哪种类型
@@ -24,6 +24,7 @@ public class CandyAction: MonoBehaviour {
     public bool isStatic = false;
 
     void Start() {
+
     }
 
     void Update() {

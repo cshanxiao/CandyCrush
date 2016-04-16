@@ -9,7 +9,7 @@ public class Candy: MonoBehaviour {
 
     public int mCol = 0;  //纵序号
     public int mRow = 0;  //横序号
-    public float mSpeed = 30.5f;
+    public float mSpeed = 45f;
 
     public Material mDarkMaterial;
     public Material mNormalMaterial;
@@ -51,6 +51,7 @@ public class Candy: MonoBehaviour {
         public int mRow;
         public int mCol;
     }
+
     void Start() {
         transform.localScale = this.mScale;
     }
