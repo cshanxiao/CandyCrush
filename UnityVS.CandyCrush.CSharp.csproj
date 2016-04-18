@@ -59,6 +59,7 @@
     <Compile Include="Assets\Script\ActionController.cs" />
     <Compile Include="Assets\Script\Candy.cs" />
     <Compile Include="Assets\Script\CandyAction.cs" />
+    <Compile Include="Assets\Script\Common.cs" />
     <Compile Include="Assets\Script\Game.cs" />
     <Compile Include="Assets\Script\GameController.cs" />
   </ItemGroup>

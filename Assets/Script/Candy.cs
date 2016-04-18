@@ -10,7 +10,7 @@ public class Candy: MonoBehaviour {
     public int mCol = 0;  //纵序号
     public int mRow = 0;  //横序号
     public float mSpeed = 45f;
-    public GameController._TYPE mType = GameController._TYPE.NORMAL;
+    public _TYPE mType = _TYPE.NORMAL;
 
     public delegate void ExchangeEventHandler(object sender, ExchangeEventArgs e);
     private event ExchangeEventHandler ExchangeEvent;

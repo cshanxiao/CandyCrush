@@ -45,14 +45,14 @@ public class ActionController: MonoBehaviour {
 
     public void isReadyCallback(object sender, GameController.GameControllerEventArgs e) {
         switch(e.mOper) {
-            case GameController._OPERATIONS.EXCHANGE: {
-                    isReadyToExchange = (e.mStatus == GameController._STATUS.READY);
+            case _OPERATIONS.EXCHANGE: {
+                    isReadyToExchange = (e.mStatus == _STATUS.READY);
                     break;
                 }
-            case GameController._OPERATIONS.DESTROY: {
+            case _OPERATIONS.DESTROY: {
                     break;
                 }
-            case GameController._OPERATIONS.RESET: {
+            case _OPERATIONS.RESET: {
                     if(exchangeList.Count == 2) {
                         Candy item0 = exchangeList[0] as Candy;
                         Candy item1 = exchangeList[1] as Candy;
@@ -93,13 +93,14 @@ public class ActionController: MonoBehaviour {
 
                             isReadyToExchange = false;
 
-                            if(item.isSpecial && exchangeItem.isSpecial) {//两个特殊糖果交换
+                            if(item.isSpecial && exchangeItem.isSpecial) {
+                                //两个特殊糖果交换
                                 this.onExchange(new ControllEventArgs(exchangeItem, item, 2));
                             }
-                            else if(item.isSpecial || exchangeItem.isSpecial) {//其中一个是特殊糖果
+                            else if(item.isSpecial || exchangeItem.isSpecial) {
+                                //其中一个是特殊糖果
                                 //任意一个是彩色糖果则触发彩色糖果特效
-
-                                if(item.mType == GameController._TYPE.COLORFUL || exchangeItem.mType == GameController._TYPE.COLORFUL) {
+                                if(item.mType == _TYPE.COLORFUL || exchangeItem.mType == _TYPE.COLORFUL) {
                                     //SendMessage("apply_trigger_special_corlorful_candy",exchangeList);
                                     this.onExchange(new ControllEventArgs(exchangeItem, item, 1));
                                 }
@@ -126,7 +127,6 @@ public class ActionController: MonoBehaviour {
                         if(Mathf.Approximately(item.mPos.y + yOff, exchangeItem.mPos.y) ||
                             Mathf.Approximately(item.mPos.y - yOff, exchangeItem.mPos.y)) {
                             exchangeList.Clear();  //清空交换列表
-
                             exchange_pos(exchangeItem, item);  //交换位置
 
                             exchangeList.Add(item);
@@ -139,7 +139,7 @@ public class ActionController: MonoBehaviour {
                                 this.onExchange(new ControllEventArgs(exchangeItem, item, 2));
                             }
                             else if(item.isSpecial || exchangeItem.isSpecial) {
-                                if(item.mType == GameController._TYPE.COLORFUL || exchangeItem.mType == GameController._TYPE.COLORFUL) {
+                                if(item.mType == _TYPE.COLORFUL || exchangeItem.mType == _TYPE.COLORFUL) {
                                     this.onExchange(new ControllEventArgs(exchangeItem, item, 1));
                                 }
                                 else {
