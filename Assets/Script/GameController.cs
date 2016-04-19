@@ -60,7 +60,7 @@ public class GameController: MonoBehaviour {
         ac.yOff = yOff;
         this.AttachEventHandler(ac.isReadyCallback);
 
-        InitPool(this.mCol, this.mRow, ref this.ShowList);
+        InitShowlist(this.mCol, this.mRow, ref this.ShowList);
         InitCandys(SVector);
 
         MatchList = new ArrayList();
@@ -140,7 +140,7 @@ public class GameController: MonoBehaviour {
         yield return new WaitForSeconds(mWait);
     }
 
-    void InitPool(int pcol, int prow, ref ArrayList pool) {
+    void InitShowlist(int pcol, int prow, ref ArrayList pool) {
         pool = new ArrayList(pcol);
         for(int col = 0; col < pcol; col++) {
             ArrayList temp = new ArrayList(prow);
@@ -237,14 +237,11 @@ public class GameController: MonoBehaviour {
     void specialRemove(ref List<Candy> specialcandys, ref ArrayList temp_group_list) {
 
         for(int index = 0; index < specialcandys.Count; index++) {
-
             Candy temp_item = specialcandys[index];
 
             switch(temp_item.mType) {
                 case _TYPE.STREAKH: {
-
                         List<Candy> same_row = getSameRow(temp_item);
-
                         for(int col = 0; col < same_row.Count; col++) {
                             if(!temp_group_list.Contains(same_row[col])) {
                                 same_row[col].setDark(true);
@@ -254,9 +251,7 @@ public class GameController: MonoBehaviour {
                         break;
                     }
                 case _TYPE.STREAKV: {
-
                         List<Candy> same_col = getSameCol(temp_item);
-
                         for(int row = 0; row < same_col.Count; row++) {
                             if(!temp_group_list.Contains(same_col[row])) {
                                 same_col[row].setDark(true);
@@ -266,9 +261,7 @@ public class GameController: MonoBehaviour {
                         break;
                     }
                 case _TYPE.PACKAGE: {
-
                         List<Candy> same_round = getRound8(temp_item);
-
                         for(int col = 0; col < same_round.Count; col++) {
                             if(!temp_group_list.Contains(same_round[col])) {
                                 same_round[col].setDark(true);
@@ -474,7 +467,8 @@ public class GameController: MonoBehaviour {
             ArrayList temp = ShowList[col] as ArrayList;
             int topOff = 0;
             for(int row = temp.Count; row < this.mRow; row++) {
-                Vector3 temp_vector3 = new Vector3(BVector.x + col * xOff, BVector.y + (this.mRow + topOff) * yOff, 0f);
+                Vector3 temp_vector3 = new Vector3(BVector.x + col * xOff, 
+                                                   BVector.y + (this.mRow + topOff) * yOff, 0f);
                 int index = UnityEngine.Random.Range(0, normalCandys.Count);
                 Candy item = NewCandy(col, row, temp_vector3, _TYPE.NORMAL, index);
 
@@ -501,9 +495,7 @@ public class GameController: MonoBehaviour {
         List<Candy> result = new List<Candy>();
         for(int col = 0; col < this.mCol; col++) {
             for(int row = 0; row < this.mRow; row++) {
-
                 Candy item = getCandy(col, row);
-
                 if(null != item && item.isSpecial) {
                     result.Add(item);
                 }
@@ -514,59 +506,34 @@ public class GameController: MonoBehaviour {
 
     //获取某一类型的所有糖果
     private List<Candy> findCandysOfType(Candy pitem) {
-
-        List<Candy> result = new List<Candy>();
-
+        List<Candy> listCandy = new List<Candy>();
         for(int col = 0; col < this.mCol; col++) {
             for(int row = 0; row < this.mRow; row++) {
-
                 Candy item = getCandy(col, row);
-
                 if(null != item && !item.isSpecial && item.mIndex == pitem.mIndex) {
-                    result.Add(item);
+                    listCandy.Add(item);
                 }
             }
         }
-        return result;
+        return listCandy;
     }
 
     //获取某一糖果周围8个糖果
     private List<Candy> getRound8(Candy item) {
-        List<Candy> result = new List<Candy>();
+        List<Candy> listCandy = new List<Candy>();
 
-        Candy top_item = getCandy(item.mCol, item.mRow + 1);
-        if(null != top_item)
-            result.Add(top_item);
-
-        Candy bottom_item = getCandy(item.mCol, item.mRow - 1);
-        if(null != bottom_item)
-            result.Add(bottom_item);
-
-        Candy left_item = getCandy(item.mCol - 1, item.mRow);
-        if(null != left_item)
-            result.Add(left_item);
-
-        Candy right_item = getCandy(item.mCol + 1, item.mRow);
-        if(null != right_item)
-            result.Add(right_item);
-
-        Candy left_top_item = getCandy(item.mCol - 1, item.mRow + 1);
-        if(null != left_top_item)
-            result.Add(left_top_item);
-
-        Candy left_bottom_item = getCandy(item.mCol - 1, item.mRow - 1);
-        if(null != left_bottom_item)
-            result.Add(left_bottom_item);
-
-        Candy right_top_item = getCandy(item.mCol + 1, item.mRow + 1);
-        if(null != right_top_item)
-            result.Add(right_top_item);
-
-        Candy right_bottom_item = getCandy(item.mCol + 1, item.mRow - 1);
-        if(null != right_bottom_item)
-            result.Add(right_bottom_item);
-
-        return result;
+        int col = item.mCol - 1;
+        int row = item.mRow - 1;
+        for(; col <= item.mCol + 1; col++) {
+            for(; row <= item.mRow + 1; row++) { 
+                if(col == item.mCol && row == item.mRow)
+                    continue;
+                Candy candy = getCandy(col, row);
+                if(null != candy)
+                    listCandy.Add(candy);
+            }
+        }
+        return listCandy;
     }
 
     //获取同一列的糖果
@@ -577,9 +544,7 @@ public class GameController: MonoBehaviour {
         for(int row = 0; row < temp_arraylist.Count; row++) {
             Candy temp_item = temp_arraylist[row] as Candy;
             temp_list.Add(temp_item);
-
         }
-
         return temp_list;
     }
 
@@ -597,7 +562,6 @@ public class GameController: MonoBehaviour {
     //重新排列糖果
     private void resetPositon() {
         for(int col = 0; col < this.mCol; col++) {
-
             ArrayList temp = ShowList[col] as ArrayList;
             int row = 0;
             for(; row < temp.Count; row++) {
@@ -609,25 +573,16 @@ public class GameController: MonoBehaviour {
         }
     }
 
-    
-
     //获取某一序列对的糖果
     Candy getCandy(int col, int row) {
-        if(col < 0 || row < 0) {
+        if(col < 0 || row < 0 || col >= this.mCol || row >= this.mRow) {
             return null;
         }
-        if(col < this.mCol && row < this.mRow) {
-            ArrayList temp = ShowList[col] as ArrayList;
-            if(row < temp.Count) {
-                return temp[row] as Candy;
-            }
-            else {
-                return null;
-            }
-        }
-        else {
-            return null;
-        }
+
+        ArrayList temp = ShowList[col] as ArrayList;
+        if(null != temp)
+            return temp[row] as Candy;
+        return null;
     }
 
     //设置糖果在数组中的位置
@@ -638,18 +593,19 @@ public class GameController: MonoBehaviour {
         return temp_object;
     }
 
+    #region 移除游戏物体
     //从当前游戏对象列表中移除游戏物体
     private void removeCandy(Candy item) {
         ArrayList temp = ShowList[item.mCol] as ArrayList;
         temp.Remove(item);
     }
 
-
     private void removeCandy(List<Candy> plist) {
         for(int index = 0; index < plist.Count; index++) {
             removeCandy(plist[index]);
         }
     }
+    #endregion
 
     bool isAllReady() {
         int total = 0;

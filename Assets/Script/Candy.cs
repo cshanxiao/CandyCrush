@@ -55,13 +55,31 @@ public class Candy: MonoBehaviour {
     void Update() {
         float step = mSpeed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, mPos, step);
+        mStatic = false;
         if(transform.position == mPos) {
             mStatic = true;
         }
-        else {
-            mStatic = false;
-        }
     }
+
+    void OnMouseEnter() {
+        SpriteRenderer sr = this.gameObject.GetComponent<SpriteRenderer>();
+        sr.color = Color.blue;
+    }
+
+    void OnMouseExit() {
+        SpriteRenderer sr = this.gameObject.GetComponent<SpriteRenderer>();
+        sr.color = Color.white;
+    }
+
+    //private Vector3 screenPoint;
+    //static public bool bDrag;  
+    //void OnMouseDrag() {
+    //    bDrag = true;
+    //    Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+    //    Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + new Vector3(0, 0, 0.5f);
+    //    transform.position = curPosition;
+    //    print("curPosition" + curPosition);
+    //}
 
     void OnMouseUpAsButton() {
         this.onSelected(new ExchangeEventArgs());
@@ -69,11 +87,9 @@ public class Candy: MonoBehaviour {
 
     public void setDark(bool flag) {
         SpriteRenderer sr = this.gameObject.GetComponent<SpriteRenderer>();
+        sr.color = Color.white;
         if(flag) {
             sr.color = Color.yellow;
-        }
-        else {
-            sr.color = Color.white;
         }
     }
 
