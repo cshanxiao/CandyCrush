@@ -15,19 +15,19 @@ public class Candy: MonoBehaviour {
     public delegate void ExchangeEventHandler(object sender, ExchangeEventArgs e);
     private event ExchangeEventHandler ExchangeEvent;
 
-    private bool mSpecial = false;  //是否是特殊糖果
+    //是否是特殊糖果
+    private bool mSpecial = false;  
     public bool isSpecial {
         get { return this.mSpecial; }
         set { this.mSpecial = value; }
     }
 
     // 索引，用于判断是哪种类型
+    private int Index;
     public int mIndex {
         get { return this.Index; }
         set { this.Index = value; }
     }
-
-    private int Index;  //索引
 
     //是否到达指定位置
     private bool mStatic = false;

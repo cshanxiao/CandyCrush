@@ -28,14 +28,11 @@ public class CandyAction: MonoBehaviour {
     }
 
     void Update() {
-        print(transform.position);
         float step = mSpeed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, mPos, step);
+        isStatic = false;
         if(transform.position == mPos) {
             isStatic = true;
-        }
-        else {
-            isStatic = false;
         }
     }
 
